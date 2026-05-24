@@ -1,0 +1,60 @@
+[project]
+name = "ainfera-microsoft-agent-framework"
+version = "0.1.0"
+description = "Microsoft Agent Framework + Ainfera Routing — point MAF at api.ainfera.ai with 2 env vars."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.10"
+authors = [{ name = "Ainfera", email = "hizrian@ainfera.ai" }]
+keywords = ["ainfera", "microsoft-agent-framework", "maf", "ainfera-inference", "ai-routing"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    # MAF wraps the official `openai` SDK underneath; our adapter pre-configures
+    # an AsyncOpenAI client with Ainfera's base_url + key and passes it in.
+    # Per the 2026-05-22 MAF v1.6.0 release; we test against the GA line.
+    "agent-framework>=1.6.0",
+    "openai>=1.50",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "pytest-mock>=3.14",
+    "ruff>=0.6",
+    "mypy>=1.10",
+]
+
+[project.urls]
+Homepage = "https://github.com/ainfera-ai/ainfera-microsoft-agent-framework"
+Documentation = "https://ainfera.ai/docs"
+Repository = "https://github.com/ainfera-ai/ainfera-microsoft-agent-framework"
+Issues = "https://github.com/ainfera-ai/ainfera-microsoft-agent-framework/issues"
+"Ainfera platform" = "https://app.ainfera.ai"
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ainfera_maf"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "RUF"]
+
+[tool.mypy]
+strict = true
+python_version = "3.10"
