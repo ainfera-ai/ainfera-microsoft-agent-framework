@@ -83,4 +83,8 @@ jobs:
             cp /tmp/requirements-locked.txt /tmp/requirements-pypi-only.txt
           fi
       - name: pip-audit (CVE scan)
-        run: uv tool run pip-audit --strict --requirement /tmp/requirements-pypi-only.txt
+        # Two CVEs live in UNUSED transitive deps pulled by agent-framework-core[all]
+        # extras (never imported by ainfera_maf): mem0ai 1.0.11 (CVE-2026-7597, fix only
+        # in prerelease 2.0.0b2) and ollama 0.5.3 (PYSEC-2025-145, no fixed version).
+        # No release remediates either; ignored by explicit ID — revisit when fixes ship.
+        run: uv tool run pip-audit --strict --requirement /tmp/requirements-pypi-only.txt --ignore-vuln CVE-2026-7597 --ignore-vuln PYSEC-2025-145

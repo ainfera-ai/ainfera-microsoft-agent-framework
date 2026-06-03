@@ -27,7 +27,6 @@ from ainfera_maf import (
 )
 from ainfera_maf._client import _resolve_config
 
-
 # ── _resolve_config (the contract) ────────────────────────────────
 
 
@@ -106,9 +105,7 @@ def test_chat_completion_client_passes_ainfera_kwargs(
 ) -> None:
     monkeypatch.setenv("AINFERA_API_KEY", "ai_infera_test")
     fake = MagicMock(name="OpenAIChatCompletionClient")
-    with patch(
-        "agent_framework.openai.OpenAIChatCompletionClient", return_value=fake
-    ) as ctor:
+    with patch("agent_framework.openai.OpenAIChatCompletionClient", return_value=fake) as ctor:
         client = ainfera_chat_completion_client(model="claude-opus-4-7")
     assert client is fake
     _, kwargs = ctor.call_args
