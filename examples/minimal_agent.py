@@ -18,9 +18,7 @@ from ainfera_maf import ainfera_chat_client
 async def main() -> None:
     agent = ChatAgent(
         chat_client=ainfera_chat_client(model="ainfera-inference"),
-        instructions=(
-            "You are a helpful assistant. Reply in one concise sentence."
-        ),
+        instructions=("You are a helpful assistant. Reply in one concise sentence."),
     )
     result = await agent.run("What's the capital of France?")
     print(result)

@@ -23,6 +23,15 @@ dependencies = [
     # Per the 2026-05-22 MAF v1.6.0 release; we test against the GA line.
     "agent-framework>=1.6.0",
     "openai>=1.50",
+    # agent-framework-core[all] (pulled in unconditionally by agent-framework)
+    # transitively pins a *pre-release* of azure-search-documents (11.7.0b2).
+    # uv's default resolver (`if-necessary-or-explicit`) only accepts a
+    # pre-release that is requested *explicitly*, so without this line plain
+    # `uv lock` / `uv lock --check` is unsatisfiable for every supported Python
+    # version. Declared narrowly here so we do NOT need a global
+    # `prerelease = "allow"` (which would also drag numpy/pydantic/etc. onto
+    # alpha builds and gut the supply-chain gate).
+    "azure-search-documents>=11.7.0b2",
 ]
 
 [project.optional-dependencies]
