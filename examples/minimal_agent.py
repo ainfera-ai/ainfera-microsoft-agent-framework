@@ -1,7 +1,7 @@
 """Minimal MAF agent routed through Ainfera.
 
 Run:
-    export AINFERA_API_KEY=ai_infera_...
+    export AINFERA_API_KEY=ainfera_...
     pip install ainfera-microsoft-agent-framework
     python examples/minimal_agent.py
 """

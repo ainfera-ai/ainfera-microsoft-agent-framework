@@ -4,7 +4,7 @@ The shared family contract (see also `ainfera-pydantic`, `ainfera-langchain`,
 `ainfera-crewai`, `ainfera-langgraph` — all standalone adapter repos):
 
   - Base URL: `AINFERA_API_URL` env var, default `https://api.ainfera.ai/v1`
-  - Key: `AINFERA_API_KEY` env var (an `ai_infera_*` value)
+  - Key: `AINFERA_API_KEY` env var (an `ainfera_*` value)
   - Default model: `ainfera-inference` (the routing-engine alias; exercises
     the moat) — caller can override to any catalog slug from
     `GET /v1/models` (e.g. `claude-opus-4-7`).
@@ -63,14 +63,14 @@ def _resolve_config(
         raise ValueError(
             "ainfera_chat_client requires AINFERA_API_KEY (env var) or an "
             "explicit api_key= argument. Get a key at https://app.ainfera.ai/signup; "
-            "it starts with `ai_infera_`."
+            "it starts with `ainfera_`."
         )
-    if not resolved_key.startswith("ai_infera_"):
+    if not resolved_key.startswith("ainfera_"):
         # Defense in depth — sanity-check the prefix. An OpenAI sk-* key
         # in this slot would silently round-trip to OpenAI directly and
         # bypass Ainfera (no audit chain, no §16 row). Catch + raise.
         raise ValueError(
-            "AINFERA_API_KEY value does not start with `ai_infera_`. "
+            "AINFERA_API_KEY value does not start with `ainfera_`. "
             "If you intend to call OpenAI directly, use the OpenAI client "
             "directly — this package's contract is Ainfera routing."
         )

@@ -4,12 +4,12 @@ Microsoft Agent Framework (the 2026 merged successor to AutoGen + Semantic
 Kernel) ships with `OpenAIChatClient` + `OpenAIChatCompletionClient` that
 wrap the underlying `openai` SDK. This package supplies a pre-configured
 chat client whose underlying `AsyncOpenAI` instance points at
-`api.ainfera.ai/v1` with an `ai_infera_*` key, so MAF agents route through
+`api.ainfera.ai/v1` with an `ainfera_*` key, so MAF agents route through
 the Ainfera gateway with two env vars instead of bespoke wiring.
 
 ## The two env vars
 
-  AINFERA_API_KEY   — your `ai_infera_*` key from app.ainfera.ai/signup
+  AINFERA_API_KEY   — your `ainfera_*` key from app.ainfera.ai/signup
   AINFERA_API_URL   — defaults to https://api.ainfera.ai/v1 (override for staging)
 
 ## Usage (minimal)
