@@ -33,6 +33,12 @@ async def main() -> None:
 asyncio.run(main())
 ```
 
+Or with `curl` only (no install needed):
+
+```bash
+./curl-example.sh
+```
+
 That's the whole story. The agent's call routes through `api.ainfera.ai/v1` → Ainfera's routing engine picks the right backend → response comes back with a signed receipt + a `routing_outcomes` row in the audit chain.
 
 ## Model choice
