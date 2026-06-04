@@ -13,7 +13,7 @@ pip install ainfera-microsoft-agent-framework
 ## Quickstart (2 env vars)
 
 ```bash
-export AINFERA_API_KEY=ai_infera_...  # https://app.ainfera.ai/signup
+export AINFERA_API_KEY=ainfera_...  # https://app.ainfera.ai/signup
 # AINFERA_API_URL defaults to https://api.ainfera.ai/v1 (override for staging)
 ```
 
@@ -54,7 +54,7 @@ Both pass through. MAF's `ChatAgent` supports tool calling + streaming on `OpenA
 
 | Env var | Default | Required |
 |---|---|---|
-| `AINFERA_API_KEY` | (none) | **Yes** — must start with `ai_infera_` |
+| `AINFERA_API_KEY` | (none) | **Yes** — must start with `ainfera_` |
 | `AINFERA_API_URL` | `https://api.ainfera.ai/v1` | No |
 
 You can also pass explicit `api_key=` / `base_url=` / `model=` arguments to `ainfera_chat_client(...)`. Explicit args win over env vars.

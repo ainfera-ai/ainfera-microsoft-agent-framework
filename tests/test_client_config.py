@@ -32,23 +32,23 @@ from ainfera_maf._client import _resolve_config
 
 def test_resolve_uses_explicit_args_first(monkeypatch: pytest.MonkeyPatch) -> None:
     """Explicit args always win over env vars."""
-    monkeypatch.setenv("AINFERA_API_KEY", "ai_infera_envkey")
+    monkeypatch.setenv("AINFERA_API_KEY", "ainfera_envkey")
     monkeypatch.setenv("AINFERA_API_URL", "https://env.example/v1")
     cfg = _resolve_config(
-        api_key="ai_infera_explicit",
+        api_key="ainfera_explicit",
         base_url="https://explicit.example/v1",
         model="claude-opus-4-7",
     )
-    assert cfg.api_key == "ai_infera_explicit"
+    assert cfg.api_key == "ainfera_explicit"
     assert cfg.base_url == "https://explicit.example/v1"
     assert cfg.model == "claude-opus-4-7"
 
 
 def test_resolve_falls_back_to_env(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setenv("AINFERA_API_KEY", "ai_infera_envkey")
+    monkeypatch.setenv("AINFERA_API_KEY", "ainfera_envkey")
     monkeypatch.setenv("AINFERA_API_URL", "https://env.example/v1")
     cfg = _resolve_config()
-    assert cfg.api_key == "ai_infera_envkey"
+    assert cfg.api_key == "ainfera_envkey"
     assert cfg.base_url == "https://env.example/v1"
     assert cfg.model == DEFAULT_MODEL == "ainfera-inference"
 
@@ -56,7 +56,7 @@ def test_resolve_falls_back_to_env(monkeypatch: pytest.MonkeyPatch) -> None:
 def test_resolve_falls_back_to_defaults_for_url_and_model(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setenv("AINFERA_API_KEY", "ai_infera_envkey")
+    monkeypatch.setenv("AINFERA_API_KEY", "ainfera_envkey")
     monkeypatch.delenv("AINFERA_API_URL", raising=False)
     cfg = _resolve_config()
     assert cfg.base_url == DEFAULT_BASE_URL == "https://api.ainfera.ai/v1"
@@ -79,7 +79,7 @@ def test_resolve_raises_on_non_ainfera_key_prefix(
     monkeypatch.setenv("AINFERA_API_KEY", "sk-1234567890abcdef")
     with pytest.raises(ValueError) as exc_info:
         _resolve_config()
-    assert "ai_infera_" in str(exc_info.value)
+    assert "ainfera_" in str(exc_info.value)
 
 
 # ── client construction (patches MAF; no live calls) ──────────────
@@ -88,14 +88,14 @@ def test_resolve_raises_on_non_ainfera_key_prefix(
 def test_chat_client_passes_ainfera_kwargs_to_maf(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setenv("AINFERA_API_KEY", "ai_infera_test")
+    monkeypatch.setenv("AINFERA_API_KEY", "ainfera_test")
     fake_client = MagicMock(name="OpenAIChatClient")
     with patch("agent_framework.openai.OpenAIChatClient", return_value=fake_client) as ctor:
         client = ainfera_chat_client()
     assert client is fake_client
     ctor.assert_called_once()
     _, kwargs = ctor.call_args
-    assert kwargs["api_key"] == "ai_infera_test"
+    assert kwargs["api_key"] == "ainfera_test"
     assert kwargs["base_url"] == DEFAULT_BASE_URL
     assert kwargs["model"] == "ainfera-inference"
 
@@ -103,13 +103,13 @@ def test_chat_client_passes_ainfera_kwargs_to_maf(
 def test_chat_completion_client_passes_ainfera_kwargs(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setenv("AINFERA_API_KEY", "ai_infera_test")
+    monkeypatch.setenv("AINFERA_API_KEY", "ainfera_test")
     fake = MagicMock(name="OpenAIChatCompletionClient")
     with patch("agent_framework.openai.OpenAIChatCompletionClient", return_value=fake) as ctor:
         client = ainfera_chat_completion_client(model="claude-opus-4-7")
     assert client is fake
     _, kwargs = ctor.call_args
-    assert kwargs["api_key"] == "ai_infera_test"
+    assert kwargs["api_key"] == "ainfera_test"
     assert kwargs["base_url"] == DEFAULT_BASE_URL
     assert kwargs["model"] == "claude-opus-4-7"
 
@@ -120,7 +120,7 @@ def test_chat_client_forwards_extra_kwargs(
     """Caller-supplied MAF kwargs (timeouts, headers, etc.) should
     pass through verbatim — adapter doesn't drop them.
     """
-    monkeypatch.setenv("AINFERA_API_KEY", "ai_infera_test")
+    monkeypatch.setenv("AINFERA_API_KEY", "ainfera_test")
     with patch("agent_framework.openai.OpenAIChatClient", return_value=MagicMock()) as ctor:
         ainfera_chat_client(timeout=30.0, default_headers={"X-Test": "1"})
     _, kwargs = ctor.call_args
