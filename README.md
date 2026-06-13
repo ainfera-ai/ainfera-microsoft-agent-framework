@@ -6,8 +6,12 @@
 
 ## Install
 
+This adapter ships as a package (`pyproject.toml`); install it from a clone:
+
 ```bash
-pip install ainfera-microsoft-agent-framework
+git clone https://github.com/ainfera-ai/ainfera-microsoft-agent-framework
+cd ainfera-microsoft-agent-framework
+pip install -e .            # or: uv pip install -e .
 ```
 
 ## Quickstart (2 env vars)
